@@ -1,5 +1,5 @@
 {% set name = "torchdata" %}
-{% set version = "0.3.0" %}
+{% set version = "0.4.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,21 +7,27 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: ac36188bf133cf5f1041a28ccb3ee82ba52d4b5d99617be37d64d740acd6cfd4
+  sha256: b4ec446a701680faa620fcb828b98ba36a63fa79da62a1e568d4a683889172da
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
   number: 0
+  script_env:
+    - USE_SYSTEM_LIBS=TRUE
 
 requirements:
   host:
     - pip
     - python >=3.7
+    - pybind11
+    - aws-sdk-cpp
+    - pytorch >=1.12.0
   run:
     - requests
     - urllib3 >=1.25
-    - pytorch >=1.11.0
+    - portalocker >=2.0.0
+    - pytorch >=1.12.0
     # https://github.com/pytorch/data#version-compatibility
     - python >=3.7
 
