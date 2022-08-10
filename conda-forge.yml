@@ -4,5 +4,4 @@ github:
 conda_forge_output_validation: true
 bot:
   inspection: update-grayskull
-azure:
-  store_build_artifacts: True
+  
