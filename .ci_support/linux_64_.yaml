@@ -1,5 +1,5 @@
 aws_sdk_cpp:
-- 1.9.160
+- 1.9.379
 cdt_name:
 - cos6
 channel_sources:
