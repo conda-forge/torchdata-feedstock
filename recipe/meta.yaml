@@ -1,5 +1,5 @@
 {% set name = "torchdata" %}
-{% set version = "0.4.1" %}
+{% set version = "0.5.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 71c0aa3aca3b04a986a2cd4cc2e0be114984ca836dc4def2c700bf1bd1ff087e
+  sha256: 69d80bd33ce8f08e7cfeeb71cefddfc29cede25a85881e33dbae47576b96ed29
 
 build:
   noarch: python
@@ -22,12 +22,12 @@ requirements:
     - python >=3.7
     - pybind11
     - aws-sdk-cpp
-    - pytorch >=1.12.0
+    - pytorch >=1.13.1,<1.14
   run:
     - requests
     - urllib3 >=1.25
     - portalocker >=2.0.0
-    - pytorch >=1.12.0
+    - pytorch >=1.13.1,<1.14
     # https://github.com/pytorch/data#version-compatibility
     - python >=3.7
 
@@ -48,3 +48,4 @@ about:
 extra:
   recipe-maintainers:
     - BastianZim
+    - Tobias-Fischer
