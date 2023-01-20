@@ -9,26 +9,34 @@ source:
   sha256: 69d80bd33ce8f08e7cfeeb71cefddfc29cede25a85881e33dbae47576b96ed29
 
 build:
-  noarch: python
   script: {{ PYTHON }} -m pip install . -vv
   number: 0
+  # no pytorch on windows in conda-forge, see
+  # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
+  skip: true  # [win]
   script_env:
+    - BUILD_S3=TRUE
+    - CMAKE_GENERATOR="Ninja"
     - USE_SYSTEM_LIBS=TRUE
 
 requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+    - ninja
   host:
     - pip
-    - python >=3.7
+    - python
     - pybind11
     - aws-sdk-cpp
     - pytorch >=1.13.1,<1.14
   run:
+    - python
     - requests
     - urllib3 >=1.25
     - portalocker >=2.0.0
     - pytorch >=1.13.1,<1.14
     # https://github.com/pytorch/data#version-compatibility
-    - python >=3.7
 
 test:
   imports:
