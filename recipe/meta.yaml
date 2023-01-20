@@ -53,7 +53,9 @@ test:
     - test/
   commands:
     - pip check
-    - pytest test/ -v
+    # test_audio_examples uses an uninstalled local folder ("examples");
+    # avoid test_text_examples due to cycle since torchtext depends on torchdata
+    - pytest test/ -v --ignore=test/test_audio_examples.py --ignore=test/test_text_examples.py
 
 about:
   home: https://github.com/pytorch/data
