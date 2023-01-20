@@ -40,10 +40,20 @@ requirements:
 test:
   imports:
     - torchdata
-  commands:
-    - pip check
   requires:
     - pip
+    - pytest
+    - adlfs
+    - datasets
+    - expecttest
+    - fsspec
+    - numpy *
+    - s3fs
+  source_files:
+    - test/
+  commands:
+    - pip check
+    - pytest test/ -v
 
 about:
   home: https://github.com/pytorch/data
