@@ -55,8 +55,9 @@ test:
     - pip check
     - cd test
     {% set tests_to_skip = "_not_a_real_test" %}
-    # unclear why both of these fail only on py<=39
-    {% set tests_to_skip = tests_to_skip + " or test_fsspec_memory_list" %}      # [py<=39]
+    # flaky test
+    {% set tests_to_skip = tests_to_skip + " or test_fsspec_memory_list" %}
+    # unclear this fails only on py<=39
     {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}  # [py<=39]
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
@@ -72,3 +73,4 @@ extra:
   recipe-maintainers:
     - BastianZim
     - Tobias-Fischer
+    - h-vetinari
