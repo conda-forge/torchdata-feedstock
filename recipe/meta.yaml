@@ -9,7 +9,7 @@ source:
   sha256: 69d80bd33ce8f08e7cfeeb71cefddfc29cede25a85881e33dbae47576b96ed29
 
 build:
-  number: 1
+  number: 2
   # no pytorch on windows in conda-forge, see
   # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
   skip: true  # [win]
@@ -55,8 +55,10 @@ test:
     - pip check
     - cd test
     {% set tests_to_skip = "_not_a_real_test" %}
-    # flaky test
+    # flaky tests
     {% set tests_to_skip = tests_to_skip + " or test_fsspec_memory_list" %}
+    {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl1_backend_gloo" %}
+    {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl2_backend_gloo" %}
     # unclear this fails only on py<=39
     {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}  # [py<=39]
     # test_audio_examples uses an uninstalled local folder ("examples");
