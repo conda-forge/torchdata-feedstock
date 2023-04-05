@@ -1,11 +1,11 @@
-About torchdata
-===============
+About torchdata-feedstock
+=========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/torchdata-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/pytorch/data
 
 Package license: BSD-3-Clause
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/torchdata-feedstock/blob/main/LICENSE.txt)
 
 Summary: A PyTorch repo for data loading and utilities to be shared by the PyTorch domain libraries.
 
