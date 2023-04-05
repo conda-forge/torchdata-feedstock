@@ -35,6 +35,7 @@ requirements:
     - requests
     - urllib3 >=1.25
     - portalocker >=2.0.0
+    - awscli
     - pytorch =2.0
 
 test:
