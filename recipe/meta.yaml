@@ -29,13 +29,13 @@ requirements:
     - python
     - pybind11
     - aws-sdk-cpp
-    - pytorch
+    - pytorch =2.0
   run:
     - python
     - requests
     - urllib3 >=1.25
     - portalocker >=2.0.0
-    - pytorch >=2
+    - pytorch =2.0
 
 test:
   imports:
