@@ -34,7 +34,6 @@ requirements:
     - python
     - requests
     - urllib3 >=1.25
-    - awscli
     - pytorch
 
 test:
@@ -44,6 +43,7 @@ test:
     - pip
     - pytest
     - adlfs
+    - awscli
     - datasets
     - expecttest
     - fsspec
