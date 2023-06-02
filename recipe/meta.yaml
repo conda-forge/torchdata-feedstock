@@ -34,7 +34,6 @@ requirements:
     - python
     - requests
     - urllib3 >=1.25
-    - portalocker >=2.0.0
     - awscli
     - pytorch
 
@@ -49,6 +48,7 @@ test:
     - expecttest
     - fsspec
     - numpy *
+    - portalocker >=2.0.0
     - s3fs
   source_files:
     - test/
