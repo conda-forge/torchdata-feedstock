@@ -30,6 +30,7 @@ requirements:
     - pybind11
     - aws-sdk-cpp
     - pytorch
+    - zlib
   run:
     - python
     - requests
