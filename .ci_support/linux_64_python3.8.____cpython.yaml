@@ -1,5 +1,5 @@
 aws_sdk_cpp:
-- 1.11.156
+- 1.11.182
 cdt_name:
 - cos6
 channel_sources:
@@ -22,3 +22,5 @@ pytorch:
 - '2.0'
 target_platform:
 - linux-64
+zlib:
+- '1.2'
