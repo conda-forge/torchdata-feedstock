@@ -1,4 +1,5 @@
-{% set version = "0.6.1" %}
+{% set tests_to_skip = "_not_a_real_test" %}
+{% set version = "0.7.0" %}
 
 package:
   name: torchdata
@@ -6,10 +7,10 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: c596db251c5e6550db3f00e4308ee7112585cca4d6a1c82a433478fd86693257
+  sha256: 0b444719c3abc67201ed0fea92ea9c4100e7f36551ba0d19a09446cc11154eb3
 
 build:
-  number: 2
+  number: 0
   # no pytorch on windows in conda-forge, see
   # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
   skip: true  # [win]
