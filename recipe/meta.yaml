@@ -65,11 +65,12 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_fsspec_memory_list" %}
     {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl1_backend_gloo" %}
     {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl2_backend_gloo" %}
+    # fails because fsspec is not available (AWS S3 stuff)
+    {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}
+    {% set tests_to_skip = tests_to_skip + " or test_s3_io_iterdatapipe" %}
     # tend to fail due to Google Drive rate-limiting
     {% set tests_to_skip = tests_to_skip + " or test_gdrive_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_online_iterdatapipe" %}
-    # unclear this fails only on py<=39
-    {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}  # [py<=39]
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
     - pytest -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})"
