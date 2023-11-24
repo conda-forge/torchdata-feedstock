@@ -39,7 +39,6 @@ requirements:
     - requests
     - urllib3 >=1.25
     - pytorch
-    - cryptography <40.0.2,>=3.3.2
 
 test:
   imports:
@@ -49,6 +48,7 @@ test:
     - pytest
     - adlfs
     - awscli
+    - cryptography >=3.3.2,<40.0.2
     - datasets
     - expecttest
     - fsspec
