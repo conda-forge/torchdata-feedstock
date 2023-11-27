@@ -1,4 +1,4 @@
-{% set version = "0.6.1" %}
+{% set version = "0.7.1" %}
 
 package:
   name: torchdata
@@ -6,10 +6,10 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: c596db251c5e6550db3f00e4308ee7112585cca4d6a1c82a433478fd86693257
+  sha256: 1b6589336776ccba19fd3bf435588416105d372f6b85d58a9f2b008286f483bf
 
 build:
-  number: 2
+  number: 0
   # no pytorch on windows in conda-forge, see
   # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
   skip: true  # [win]
@@ -48,6 +48,7 @@ test:
     - pytest
     - adlfs
     - awscli
+    - cryptography >=3.3.2,<40.0.2
     - datasets
     - expecttest
     - fsspec
@@ -64,11 +65,15 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_fsspec_memory_list" %}
     {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl1_backend_gloo" %}
     {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl2_backend_gloo" %}
+    # fails because fsspec is not available (AWS S3 stuff)
+    {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}
+    {% set tests_to_skip = tests_to_skip + " or test_s3_io_iterdatapipe" %}
     # tend to fail due to Google Drive rate-limiting
     {% set tests_to_skip = tests_to_skip + " or test_gdrive_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_online_iterdatapipe" %}
-    # unclear this fails only on py<=39
-    {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}  # [py<=39]
+    # 20231124 - disable tests that might timeout after 6 hours
+    # https://github.com/pytorch/data/blob/v0.7.1/test/dataloader2/test_mprs.py#L233
+    {% set tests_to_skip = tests_to_skip + " or test_early_exit_ctx_" %}
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
     - pytest -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})"
