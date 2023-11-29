@@ -9,7 +9,7 @@ source:
   sha256: 1b6589336776ccba19fd3bf435588416105d372f6b85d58a9f2b008286f483bf
 
 build:
-  number: 0
+  number: 1
   # no pytorch on windows in conda-forge, see
   # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
   skip: true  # [win]
