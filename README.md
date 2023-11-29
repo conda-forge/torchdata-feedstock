@@ -214,4 +214,5 @@ Feedstock Maintainers
 * [@BastianZim](https://github.com/BastianZim/)
 * [@Tobias-Fischer](https://github.com/Tobias-Fischer/)
 * [@h-vetinari](https://github.com/h-vetinari/)
+* [@weiji14](https://github.com/weiji14/)
 
