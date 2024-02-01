@@ -54,7 +54,7 @@ test:
     - fsspec
     - numpy *
     - portalocker >=2.0.0
-    - s3fs
+    - s3fs >=2023.12.2
   source_files:
     - test/
   commands:
