@@ -6,10 +6,10 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 1b6589336776ccba19fd3bf435588416105d372f6b85d58a9f2b008286f483bf
+  sha256: ef9bbdcee759b53c3c9d99e76eb0a66da33d36bfb7f859a25a9b5e737a51fa23
 
 build:
-  number: 1
+  number: 2
   # no pytorch on windows in conda-forge, see
   # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
   skip: true  # [win]
@@ -54,7 +54,7 @@ test:
     - fsspec
     - numpy *
     - portalocker >=2.0.0
-    - s3fs
+    - s3fs >=2023.12.2
   source_files:
     - test/
   commands:
