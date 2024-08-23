@@ -34,6 +34,7 @@ requirements:
     - ninja
   host:
     - pip
+    - setuptools
     - python
     - pybind11
     - aws-sdk-cpp
