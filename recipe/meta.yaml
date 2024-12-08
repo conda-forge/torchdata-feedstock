@@ -59,6 +59,7 @@ test:
     - expecttest
     - fsspec
     - numpy *
+    - msal_extensions >=1.2
     - portalocker >=2.0.0
     - s3fs >=2023.12.2
   source_files:
