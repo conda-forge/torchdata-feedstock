@@ -9,7 +9,7 @@ source:
   sha256: ef9bbdcee759b53c3c9d99e76eb0a66da33d36bfb7f859a25a9b5e737a51fa23
 
 build:
-  number: 11
+  number: 12
   # no pytorch on windows in conda-forge, see
   # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
   skip: true  # [win]
@@ -59,6 +59,7 @@ test:
     - expecttest
     - fsspec
     - numpy *
+    - msal_extensions >=1.2
     - portalocker >=2.0.0
     - s3fs >=2023.12.2
   source_files:
