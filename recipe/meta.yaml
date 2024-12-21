@@ -54,7 +54,7 @@ test:
     - pytest
     - adlfs
     - awscli
-    - cryptography >=3.3.2,<40.0.2
+    - cryptography
     - datasets
     - expecttest
     - fsspec
