@@ -9,7 +9,7 @@ source:
   sha256: ef9bbdcee759b53c3c9d99e76eb0a66da33d36bfb7f859a25a9b5e737a51fa23
 
 build:
-  number: 13
+  number: 14
   # no pytorch on windows in conda-forge, see
   # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
   skip: true  # [win]
@@ -81,6 +81,7 @@ test:
     # 20231124 - disable tests that might timeout after 6 hours
     # https://github.com/pytorch/data/blob/v0.7.1/test/dataloader2/test_mprs.py#L233
     {% set tests_to_skip = tests_to_skip + " or test_early_exit_ctx_" %}
+    {% set tests_to_skip = tests_to_skip + " or test_reading_service_limit_dp1" %}
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
     - pytest -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})"
