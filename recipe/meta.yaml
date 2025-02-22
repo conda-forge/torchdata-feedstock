@@ -83,6 +83,8 @@ test:
     # https://github.com/pytorch/data/blob/v0.7.1/test/dataloader2/test_mprs.py#L233
     {% set tests_to_skip = tests_to_skip + " or test_early_exit_ctx_" %}
     {% set tests_to_skip = tests_to_skip + " or test_reading_service_limit_dp1" %}
+    # issue with deprecated module `datapipes` not being loaded lazily
+    {% set tests_to_skip = tests_to_skip + " or (TestTorchDataLazyImport_shard3 and test_lazy_imports)" %}
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
     - pytest -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})"
