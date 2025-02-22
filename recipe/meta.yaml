@@ -1,4 +1,4 @@
-{% set version = "0.7.1" %}
+{% set version = "0.11.0" %}
 
 package:
   name: torchdata
@@ -6,10 +6,10 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: ef9bbdcee759b53c3c9d99e76eb0a66da33d36bfb7f859a25a9b5e737a51fa23
+  sha256: 945c53a8587567624aaad2d66204fbae9acb9535696554c53ffeb83320c308b9
 
 build:
-  number: 15
+  number: 0
   # no pytorch on windows in conda-forge, see
   # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
   skip: true  # [win]
