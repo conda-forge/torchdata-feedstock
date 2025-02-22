@@ -87,7 +87,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or (TestTorchDataLazyImport_shard3 and test_lazy_imports)" %}
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
-    - pytest -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})"
+    - pytest -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})" --durations=50
 
 about:
   home: https://github.com/pytorch/data
