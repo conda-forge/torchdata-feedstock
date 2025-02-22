@@ -1,4 +1,4 @@
-{% set version = "0.8.0" %}
+{% set version = "0.9.0" %}
 
 package:
   name: torchdata
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: d5d27b264e79d7d00ad4998f14d097b770332d979672dceb6d038caf204f1208
+  sha256: b547bbe848ad813cc5365fe0bb02051150bec6c7c4ee7bffd6b6d3d7bdeddd75
 
 build:
   number: 0
