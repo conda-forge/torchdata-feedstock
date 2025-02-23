@@ -62,6 +62,7 @@ test:
     - fsspec
     - numpy *
     - msal_extensions >=1.2
+    - parameterized
     - portalocker >=2.0.0
     - psutil
     - s3fs >=2023.12.2
