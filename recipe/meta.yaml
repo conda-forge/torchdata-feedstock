@@ -79,7 +79,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl1_backend_gloo" %}
     {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl2_backend_gloo" %}
     {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx]
-    {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx]
+    {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win]
     # fails because fsspec is not available (AWS S3 stuff)
     {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_s3_io_iterdatapipe" %}
