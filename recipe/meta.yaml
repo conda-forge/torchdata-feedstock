@@ -87,7 +87,7 @@ test:
     # issue with deprecated module `datapipes` not being loaded lazily
     {% set tests_to_skip = tests_to_skip + " or (TestTorchDataLazyImport_shard3 and test_lazy_imports)" %}
     # failures on py313
-    {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [linux and py==313]
+    {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [py==313]
     # very long-running test (~5min)
     {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [osx]
