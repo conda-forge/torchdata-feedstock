@@ -14,11 +14,13 @@ build:
     # CMake really wants to find it, but we don't need it
     - zlib
   script:
-    - export BUILD_S3=TRUE              # [unix]
-    - export CMAKE_GENERATOR="Ninja"    # [unix]
-    - export USE_SYSTEM_LIBS=TRUE       # [unix]
-    - set BUILD_S3=TRUE                 # [win]
-    - set USE_SYSTEM_LIBS=TRUE          # [win]
+    - export BUILD_S3=TRUE                  # [unix]
+    - export BUILD_VERSION={{ version }}    # [unix]
+    - export CMAKE_GENERATOR="Ninja"        # [unix]
+    - export USE_SYSTEM_LIBS=TRUE           # [unix]
+    - set BUILD_S3=TRUE                     # [win]
+    - set BUILD_VERSION={{ version }}       # [win]
+    - set USE_SYSTEM_LIBS=TRUE              # [win]
     - {{ PYTHON }} -m pip install . -vv
 
 requirements:
@@ -67,6 +69,9 @@ test:
     - test/
   commands:
     - pip check
+    # ensure that the package metadata did not mangle in the git hash
+    - test -f $SP_DIR/torchdata-{{ version }}.dist-info/METADATA                # [unix]
+    - if not exist %SP_DIR%\torchdata-{{ version }}.dist-info\METADATA exit 1   # [win]
     - cd test
     {% set tests_to_skip = "_not_a_real_test" %}
     # flaky tests
