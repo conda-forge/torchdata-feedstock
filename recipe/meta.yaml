@@ -75,7 +75,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [py==313]
     # may hang or OOM on windows
     {% set tests_to_skip = tests_to_skip + " or test_exception_handling_mapper_multi" %}    # [win]
-    {% set tests_to_skip = tests_to_skip + " or (TestMap and test_in_order_process)" %}     # [win]
+    {% set tests_to_skip = tests_to_skip + " or (TestMap and order_process)" %}             # [win]
     # 19/26 tests that match this condition run >2min on osx/win
     {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or win]
     # test_audio_examples uses an uninstalled local folder ("examples");
