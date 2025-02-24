@@ -1,4 +1,4 @@
-{% set version = "0.8.0" %}
+{% set version = "0.9.0" %}
 
 package:
   name: torchdata
@@ -6,20 +6,21 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: d5d27b264e79d7d00ad4998f14d097b770332d979672dceb6d038caf204f1208
+  sha256: b547bbe848ad813cc5365fe0bb02051150bec6c7c4ee7bffd6b6d3d7bdeddd75
 
 build:
   number: 0
-  # no pytorch on windows in conda-forge, see
-  # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32
-  skip: true  # [win]
   ignore_run_exports_from:
     # CMake really wants to find it, but we don't need it
     - zlib
   script:
-    - export BUILD_S3=TRUE
-    - export CMAKE_GENERATOR="Ninja"
-    - export USE_SYSTEM_LIBS=TRUE
+    - export BUILD_S3=TRUE                  # [unix]
+    - export BUILD_VERSION={{ version }}    # [unix]
+    - export CMAKE_GENERATOR="Ninja"        # [unix]
+    - export USE_SYSTEM_LIBS=TRUE           # [unix]
+    - set BUILD_S3=TRUE                     # [win]
+    - set BUILD_VERSION={{ version }}       # [win]
+    - set USE_SYSTEM_LIBS=TRUE              # [win]
     - {{ PYTHON }} -m pip install . -vv
 
 requirements:
@@ -68,13 +69,20 @@ test:
     - test/
   commands:
     - pip check
+    # ensure that the package metadata did not mangle in the git hash
+    - test -f $SP_DIR/torchdata-{{ version }}.dist-info/METADATA                # [unix]
+    - if not exist %SP_DIR%\torchdata-{{ version }}.dist-info\METADATA exit 1   # [win]
     - cd test
     {% set tests_to_skip = "_not_a_real_test" %}
     # flaky tests
     {% set tests_to_skip = tests_to_skip + " or test_fsspec_memory_list" %}
     {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl1_backend_gloo" %}
     {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl2_backend_gloo" %}
-    {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx]
+    {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx or win]
+    {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win]
+    {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_timeout)" %}       # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_dataset_not_reset" %}                  # [win]
     # fails because fsspec is not available (AWS S3 stuff)
     {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_s3_io_iterdatapipe" %}
@@ -88,12 +96,21 @@ test:
     # issue with deprecated module `datapipes` not being loaded lazily
     {% set tests_to_skip = tests_to_skip + " or (TestTorchDataLazyImport_shard3 and test_lazy_imports)" %}
     # failures on py313
-    {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}
+    {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [py==313]
+    # may hang or OOM on windows
+    {% set tests_to_skip = tests_to_skip + " or test_dispatching_exception_raised" %}       # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_distributed_dl1_backend_gloo" %}       # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_distributed_dl2_backend_gloo" %}       # [win]
+    {% set tests_to_skip = tests_to_skip + " or (test_fullsync_world and backend_gloo)" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_reading_service_limit_dp0" %}          # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_reading_service_pause_resume_dp1" %}   # [win or osx]
+    {% set tests_to_skip = tests_to_skip + " or test_tfrecord_loader" %}                    # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_multi_branch_non_replicable_ctx_spawn" %}  # [win]
     # very long-running test (~5min)
     {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [osx]
-    # 19/26 tests that match this condition run >2min on osx
-    {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx]
+    # 19/26 tests that match this condition run >2min on osx/win
+    {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or win]
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
     - pytest -n auto -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})" --durations=50
