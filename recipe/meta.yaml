@@ -76,37 +76,14 @@ test:
     - cd test
     {% set tests_to_skip = "_not_a_real_test" %}
     # flaky tests
-    {% set tests_to_skip = tests_to_skip + " or test_fsspec_memory_list" %}
-    {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl1_backend_gloo" %}
-    {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl2_backend_gloo" %}
     {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx or win]
     {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win]
-    {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_timeout)" %}       # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_dataset_not_reset" %}                  # [win]
-    # fails because fsspec is not available (AWS S3 stuff)
-    {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}
-    {% set tests_to_skip = tests_to_skip + " or test_s3_io_iterdatapipe" %}
-    # tend to fail due to Google Drive rate-limiting
-    {% set tests_to_skip = tests_to_skip + " or test_gdrive_iterdatapipe" %}
-    {% set tests_to_skip = tests_to_skip + " or test_online_iterdatapipe" %}
-    # 20231124 - disable tests that might timeout after 6 hours
-    # https://github.com/pytorch/data/blob/v0.7.1/test/dataloader2/test_mprs.py#L233
-    {% set tests_to_skip = tests_to_skip + " or test_early_exit_ctx_" %}
-    {% set tests_to_skip = tests_to_skip + " or test_reading_service_limit_dp1" %}
-    # issue with deprecated module `datapipes` not being loaded lazily
-    {% set tests_to_skip = tests_to_skip + " or (TestTorchDataLazyImport_shard3 and test_lazy_imports)" %}
     # failures on py313
     {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [py==313]
     # may hang or OOM on windows
-    {% set tests_to_skip = tests_to_skip + " or test_dispatching_exception_raised" %}       # [win]
     {% set tests_to_skip = tests_to_skip + " or test_distributed_dl1_backend_gloo" %}       # [win]
     {% set tests_to_skip = tests_to_skip + " or test_distributed_dl2_backend_gloo" %}       # [win]
-    {% set tests_to_skip = tests_to_skip + " or (test_fullsync_world and backend_gloo)" %}  # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_reading_service_limit_dp0" %}          # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_reading_service_pause_resume_dp1" %}   # [win or osx]
-    {% set tests_to_skip = tests_to_skip + " or test_tfrecord_loader" %}                    # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_multi_branch_non_replicable_ctx_spawn" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_tfrecord_loader_sequence_example" %}   # [win]
     # very long-running test (~5min)
     {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [osx]
