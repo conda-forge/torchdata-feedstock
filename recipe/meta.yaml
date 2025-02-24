@@ -1,4 +1,4 @@
-{% set version = "0.9.0" %}
+{% set version = "0.10.1" %}
 
 package:
   name: torchdata
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: b547bbe848ad813cc5365fe0bb02051150bec6c7c4ee7bffd6b6d3d7bdeddd75
+  sha256: 42f977c6a4a890848ef50c4ce3e01beeec04cc921e3ccc71d941f97de209bbfb
 
 build:
   number: 0
@@ -14,21 +14,14 @@ build:
     # CMake really wants to find it, but we don't need it
     - zlib
   script:
-    - export BUILD_S3=TRUE                  # [unix]
     - export BUILD_VERSION={{ version }}    # [unix]
-    - export CMAKE_GENERATOR="Ninja"        # [unix]
-    - export USE_SYSTEM_LIBS=TRUE           # [unix]
-    - set BUILD_S3=TRUE                     # [win]
     - set BUILD_VERSION={{ version }}       # [win]
-    - set USE_SYSTEM_LIBS=TRUE              # [win]
     - {{ PYTHON }} -m pip install . -vv
 
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - pybind11                               # [build_platform != target_platform]
-    - pytorch                                # [build_platform != target_platform]
     - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
     - cmake
@@ -37,10 +30,6 @@ requirements:
     - pip
     - setuptools
     - python
-    - pybind11
-    - aws-sdk-cpp
-    - pytorch
-    - zlib
   run:
     - python
     - requests
@@ -62,6 +51,7 @@ test:
     - fsspec
     - numpy *
     - msal_extensions >=1.2
+    - parameterized
     - portalocker >=2.0.0
     - psutil
     - s3fs >=2023.12.2
@@ -75,37 +65,21 @@ test:
     - cd test
     {% set tests_to_skip = "_not_a_real_test" %}
     # flaky tests
-    {% set tests_to_skip = tests_to_skip + " or test_fsspec_memory_list" %}
-    {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl1_backend_gloo" %}
-    {% set tests_to_skip = tests_to_skip + " or test_elastic_training_dl2_backend_gloo" %}
+    {% set tests_to_skip = tests_to_skip + " or test_large_sampler_indices" %}              # [osx]
+    {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_segfault)" %}      # [osx]
     {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx or win]
     {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win]
-    {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_timeout)" %}       # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_batch_sampler" %}                      # [win]
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_dataset_not_reset" %}                  # [win]
-    # fails because fsspec is not available (AWS S3 stuff)
-    {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}
-    {% set tests_to_skip = tests_to_skip + " or test_s3_io_iterdatapipe" %}
-    # tend to fail due to Google Drive rate-limiting
-    {% set tests_to_skip = tests_to_skip + " or test_gdrive_iterdatapipe" %}
-    {% set tests_to_skip = tests_to_skip + " or test_online_iterdatapipe" %}
-    # 20231124 - disable tests that might timeout after 6 hours
-    # https://github.com/pytorch/data/blob/v0.7.1/test/dataloader2/test_mprs.py#L233
-    {% set tests_to_skip = tests_to_skip + " or test_early_exit_ctx_" %}
-    {% set tests_to_skip = tests_to_skip + " or test_reading_service_limit_dp1" %}
-    # issue with deprecated module `datapipes` not being loaded lazily
-    {% set tests_to_skip = tests_to_skip + " or (TestTorchDataLazyImport_shard3 and test_lazy_imports)" %}
+    {% set tests_to_skip = tests_to_skip + " or test_thread_dead_error" %}                  # [win]
+    {% set tests_to_skip = tests_to_skip + " or (TestMap and test_in_order_process)" %}     # [win]
     # failures on py313
     {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [py==313]
     # may hang or OOM on windows
-    {% set tests_to_skip = tests_to_skip + " or test_dispatching_exception_raised" %}       # [win]
     {% set tests_to_skip = tests_to_skip + " or test_distributed_dl1_backend_gloo" %}       # [win]
     {% set tests_to_skip = tests_to_skip + " or test_distributed_dl2_backend_gloo" %}       # [win]
-    {% set tests_to_skip = tests_to_skip + " or (test_fullsync_world and backend_gloo)" %}  # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_reading_service_limit_dp0" %}          # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_reading_service_pause_resume_dp1" %}   # [win or osx]
-    {% set tests_to_skip = tests_to_skip + " or test_tfrecord_loader" %}                    # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_multi_branch_non_replicable_ctx_spawn" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_out_of_order_process" %}               # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_tfrecord_loader_sequence_example" %}   # [win]
     # very long-running test (~5min)
     {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [osx]
