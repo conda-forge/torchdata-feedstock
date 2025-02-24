@@ -1,4 +1,4 @@
-{% set version = "0.10.1" %}
+{% set version = "0.11.0" %}
 
 package:
   name: torchdata
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 42f977c6a4a890848ef50c4ce3e01beeec04cc921e3ccc71d941f97de209bbfb
+  sha256: 945c53a8587567624aaad2d66204fbae9acb9535696554c53ffeb83320c308b9
 
 build:
   number: 0
@@ -34,7 +34,7 @@ requirements:
     - python
     - requests
     - urllib3 >=1.25
-    - pytorch
+    - pytorch >=2
 
 test:
   imports:
@@ -67,22 +67,15 @@ test:
     # flaky tests
     {% set tests_to_skip = tests_to_skip + " or test_large_sampler_indices" %}              # [osx]
     {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_segfault)" %}      # [osx]
-    {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx or win]
+    {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx]
     {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win]
-    {% set tests_to_skip = tests_to_skip + " or test_batch_sampler" %}                      # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [win]
     {% set tests_to_skip = tests_to_skip + " or test_thread_dead_error" %}                  # [win]
-    {% set tests_to_skip = tests_to_skip + " or (TestMap and test_in_order_process)" %}     # [win]
+    {% set tests_to_skip = tests_to_skip + " or (TestDataLoaderPersistentWorkers and test_worker_seed)" %}  # [win]
     # failures on py313
     {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [py==313]
     # may hang or OOM on windows
-    {% set tests_to_skip = tests_to_skip + " or test_distributed_dl1_backend_gloo" %}       # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_distributed_dl2_backend_gloo" %}       # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_out_of_order_process" %}               # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_tfrecord_loader_sequence_example" %}   # [win]
-    # very long-running test (~5min)
-    {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}
-    {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [osx]
+    {% set tests_to_skip = tests_to_skip + " or test_exception_handling_mapper_multi" %}    # [win]
+    {% set tests_to_skip = tests_to_skip + " or (TestMap and order_process)" %}             # [win]
     # 19/26 tests that match this condition run >2min on osx/win
     {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or win]
     # test_audio_examples uses an uninstalled local folder ("examples");
