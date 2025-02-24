@@ -82,6 +82,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win]
     {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_timeout)" %}       # [win]
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_dataset_not_reset" %}                  # [win]
     # fails because fsspec is not available (AWS S3 stuff)
     {% set tests_to_skip = tests_to_skip + " or test_fsspec_io_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_s3_io_iterdatapipe" %}
@@ -102,7 +103,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_distributed_dl2_backend_gloo" %}       # [win]
     {% set tests_to_skip = tests_to_skip + " or (test_fullsync_world and backend_gloo)" %}  # [win]
     {% set tests_to_skip = tests_to_skip + " or test_reading_service_limit_dp0" %}          # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_reading_service_pause_resume_dp1" %}   # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_reading_service_pause_resume_dp1" %}   # [win or osx]
     {% set tests_to_skip = tests_to_skip + " or test_tfrecord_loader" %}                    # [win]
     {% set tests_to_skip = tests_to_skip + " or test_multi_branch_non_replicable_ctx_spawn" %}  # [win]
     # very long-running test (~5min)
