@@ -14,21 +14,14 @@ build:
     # CMake really wants to find it, but we don't need it
     - zlib
   script:
-    - export BUILD_S3=TRUE                  # [unix]
     - export BUILD_VERSION={{ version }}    # [unix]
-    - export CMAKE_GENERATOR="Ninja"        # [unix]
-    - export USE_SYSTEM_LIBS=TRUE           # [unix]
-    - set BUILD_S3=TRUE                     # [win]
     - set BUILD_VERSION={{ version }}       # [win]
-    - set USE_SYSTEM_LIBS=TRUE              # [win]
     - {{ PYTHON }} -m pip install . -vv
 
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - pybind11                               # [build_platform != target_platform]
-    - pytorch                                # [build_platform != target_platform]
     - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
     - cmake
@@ -37,10 +30,6 @@ requirements:
     - pip
     - setuptools
     - python
-    - pybind11
-    - aws-sdk-cpp
-    - pytorch
-    - zlib
   run:
     - python
     - requests
