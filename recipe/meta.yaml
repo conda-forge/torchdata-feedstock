@@ -97,7 +97,10 @@ test:
     # may hang or OOM on windows
     {% set tests_to_skip = tests_to_skip + " or test_distributed_dl1_backend_gloo" %}       # [win]
     {% set tests_to_skip = tests_to_skip + " or test_distributed_dl2_backend_gloo" %}       # [win]
-    {% set tests_to_skip = tests_to_skip + " or test_tfrecord_loader_sequence_example" %}   # [win]
+    {% set tests_to_skip = tests_to_skip + " or (test_fullsync_world and backend_gloo)" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_tfrecord_loader" %}                    # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_multi_branch_non_replicable_ctx_spawn" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or (test_reading_service_limit_dp0 and cnt_0)" %}  # [win]
     # very long-running test (~5min)
     {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [osx]
