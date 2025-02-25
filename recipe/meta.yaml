@@ -91,7 +91,7 @@ test:
     # may hang or OOM on windows
     {% set tests_to_skip = tests_to_skip + " or test_builtin_collection_conversion" %}      # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_error" %}                              # [win and py==312]
-    {% set tests_to_skip = tests_to_skip + " or test_in_order_index_ds" %}                  # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_in_order" %}                           # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_multiple_dataloaders" %}               # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_none_state" %}                         # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_sampler_state_dict" %}                 # [win and py==312]
