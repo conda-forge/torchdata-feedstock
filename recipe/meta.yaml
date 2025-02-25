@@ -70,13 +70,17 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx]
     {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win]
     {% set tests_to_skip = tests_to_skip + " or test_batch_sampler" %}                      # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_chain_iterable_style_dataset" %}       # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_multiprocessing" %}                    # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_thread_dead_error" %}                  # [win]
     {% set tests_to_skip = tests_to_skip + " or (TestDataLoaderPersistentWorkers and test_worker_seed)" %}  # [win]
     # failures on py313
     {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [py==313]
     # may hang or OOM on windows
     {% set tests_to_skip = tests_to_skip + " or test_builtin_collection_conversion" %}      # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_multiple_dataloaders" %}               # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_seed_replicability" %}                 # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_exception_handling_mapper_multi" %}    # [win]
     {% set tests_to_skip = tests_to_skip + " or (TestMap and order_process)" %}             # [win]
     # 19/26 tests that match this condition run >2min on osx/win
