@@ -42,6 +42,7 @@ test:
   requires:
     - pip
     - pytest
+    - pytest-timeout
     - pytest-xdist
     - adlfs
     - awscli
@@ -98,7 +99,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or win]
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
-    - pytest -n auto -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})" --durations=50
+    - pytest -n auto -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})" --timeout=600 --durations=50
 
 about:
   home: https://github.com/pytorch/data
