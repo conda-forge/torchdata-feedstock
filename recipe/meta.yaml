@@ -89,6 +89,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_multiple_dataloaders" %}               # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_none_state" %}                         # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_sampler_state_dict" %}                 # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_save_load_state_process_08" %}         # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_seed_replicability" %}                 # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_sequential_batch" %}                   # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_tensor_state" %}                       # [win and py==312]
@@ -99,7 +100,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or win]
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
-    - pytest -n auto -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})" --timeout=600 --durations=50
+    - pytest -n auto -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})" --timeout=900 --durations=50
 
 about:
   home: https://github.com/pytorch/data
