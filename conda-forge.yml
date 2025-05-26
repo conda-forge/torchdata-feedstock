@@ -11,9 +11,7 @@ bot:
   inspection: update-grayskull
   version_updates:
     exclude:
-      # spurious tag that got deleted, but broke the bot permanently;
-      # could also be fixed by https://github.com/regro/cf-graph-countyfair/pull/41
-      - "1217"
+    - '1217'
 build_platform:
   osx_arm64: osx_64
 conda_build:
@@ -22,4 +20,7 @@ conda_forge_output_validation: true
 github:
   branch_name: main
   tooling_branch_name: main
+provider:
+  linux_aarch64: default
+  linux_ppc64le: default
 test: native_and_emulated
