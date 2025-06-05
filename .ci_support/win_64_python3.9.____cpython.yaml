@@ -1,5 +1,3 @@
-aws_sdk_cpp:
-- 1.11.489
 c_stdlib:
 - vs
 channel_sources:
@@ -14,8 +12,6 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - 3.9.* *_cpython
-pytorch:
-- '2.6'
 target_platform:
 - win-64
 zlib:
