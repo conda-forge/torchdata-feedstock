@@ -9,7 +9,7 @@ source:
   sha256: 945c53a8587567624aaad2d66204fbae9acb9535696554c53ffeb83320c308b9
 
 build:
-  number: 0
+  number: 1
   ignore_run_exports_from:
     # CMake really wants to find it, but we don't need it
     - zlib
