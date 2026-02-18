@@ -23,4 +23,4 @@ github:
   tooling_branch_name: main
 provider:
   linux_aarch64: default
-test: native
+test: native_and_emulated
