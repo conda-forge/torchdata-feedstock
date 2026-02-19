@@ -105,7 +105,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_exception_handling_mapper_multi" %}    # [win]
     {% set tests_to_skip = tests_to_skip + " or (TestMap and order_process)" %}             # [win]
     # 19/26 tests that match this condition run >2min on osx/win
-    {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or winor aarch64]
+    {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or win or aarch64]
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
     - pytest -n auto -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})" --timeout=1200 --durations=50
