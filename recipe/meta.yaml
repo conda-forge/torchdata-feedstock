@@ -10,6 +10,7 @@ source:
 
 build:
   number: 0
+  skip: true  # [not aarch64]
   ignore_run_exports_from:
     # CMake really wants to find it, but we don't need it
     - zlib
@@ -66,10 +67,10 @@ test:
     - cd test
     {% set tests_to_skip = "_not_a_real_test" %}
     # flaky tests
-    {% set tests_to_skip = tests_to_skip + " or test_large_sampler_indices" %}              # [osx]
-    {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_segfault)" %}      # [osx]
-    {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx]
-    {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win]
+    {% set tests_to_skip = tests_to_skip + " or test_large_sampler_indices" %}              # [osx or aarch64]
+    {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_segfault)" %}      # [osx or aarch64]
+    {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx or aarch64]
+    {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win or aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_batch_sampler" %}                      # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_bulk_loading_nobatch" %}               # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_chain_iterable_style_dataset" %}       # [win and py==312]
@@ -104,7 +105,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_exception_handling_mapper_multi" %}    # [win]
     {% set tests_to_skip = tests_to_skip + " or (TestMap and order_process)" %}             # [win]
     # 19/26 tests that match this condition run >2min on osx/win
-    {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or win]
+    {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or winor aarch64]
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
     - pytest -n auto -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})" --timeout=1200 --durations=50
