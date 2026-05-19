@@ -87,7 +87,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_thread_dead_error" %}                  # [win]
     {% set tests_to_skip = tests_to_skip + " or (TestDataLoaderPersistentWorkers and test_worker_seed)" %}  # [win]
     # failures on py313
-    {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [py==313 or (win and py==312)]
+    {% set tests_to_skip = tests_to_skip + " or TestStatefulDataLoaderIterable_shard0" %}   # [py==313 or py==314 or (win and py==312)]
     # may hang or OOM on windows
     {% set tests_to_skip = tests_to_skip + " or test_builtin_collection_conversion" %}      # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_error" %}                              # [win and py==312]
@@ -96,23 +96,26 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_none_state" %}                         # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_sampler_state_dict" %}                 # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_save_load_state_process_08" %}         # [win and py==312]
-    {% set tests_to_skip = tests_to_skip + " or test_seed_replicability" %}                 # [win and py==312]
+    # may hang or OOM on osx/Windows
+    {% set tests_to_skip = tests_to_skip + " or test_seed_replicability" %}                 # [win or osx]
     # typo sequential -> sequential reflects upstream naming
-    {% set tests_to_skip = tests_to_skip + " or test_seqential_batch" %}                    # [win and py==312]
-    {% set tests_to_skip = tests_to_skip + " or test_tensor_state" %}                       # [win and py==312]
-    {% set tests_to_skip = tests_to_skip + " or test_worker" %}                             # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_seqential_batch" %}                    # [win and (py==312 or py==313 or py==314)]
+    {% set tests_to_skip = tests_to_skip + " or test_tensor_state" %}                       # [win and (py==312 or py==313 or py==314)]
+    {% set tests_to_skip = tests_to_skip + " or test_worker" %}                             # [win and (py==312 or py==313 or py==314)]
     {% set tests_to_skip = tests_to_skip + " or test_exception_handling_mapper_multi" %}    # [win]
     {% set tests_to_skip = tests_to_skip + " or (TestMap and order_process)" %}             # [win]
     # 19/26 tests that match this condition run >2min on osx/win/aarch64
     {% set tests_to_skip = tests_to_skip + " or (test_state_dict.py and DataLoader)" %}     # [osx or win or aarch64]
-    # Extremely slow tests on aarch64 (often >5 minutes each)
+    # Extremely slow tests on aarch64 and osx (often >5 minutes each)
     {% set tests_to_skip = tests_to_skip + " or (TestStatefulDataLoaderIterable_shard0 and test_mp_x)" %}       # [aarch64]
-    {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}                                  # [aarch64]
-    {% set tests_to_skip = tests_to_skip + " or (TestMap and test_save_load_state_process_)" %}                 # [aarch64]
+    {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}                                  # [aarch64 or osx]
+    {% set tests_to_skip = tests_to_skip + " or (TestMap and test_save_load_state_process_)" %}                 # [aarch64 or osx]
     {% set tests_to_skip = tests_to_skip + " or test_multi_node_weighted_large_sample_size_with_prefetcher" %}  # [aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_nested_tensor_multiprocessing_context_fork_cpu" %}         # [aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}                                 # [aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_multiprocessing_contexts" %}                               # [aarch64]
+    # Pickling has changed in Python 3.14, and the pickling only happens within the test itself
+    {% set tests_to_skip = tests_to_skip + " or test_set_affinity_in_worker_init" %}                            # [py==314]
     # test_audio_examples uses an uninstalled local folder ("examples");
     # avoid test_text_examples due to cycle since torchtext depends on torchdata
     - pytest -n auto -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k "not ({{ tests_to_skip }})" --timeout=1200 --durations=50
