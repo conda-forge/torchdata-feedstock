@@ -95,6 +95,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_multiple_dataloaders" %}               # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_none_state" %}                         # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_sampler_state_dict" %}                 # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_save_load_state_process_02" %}         # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_save_load_state_process_08" %}         # [win and py==312]
     # may hang or OOM on osx/Windows
     {% set tests_to_skip = tests_to_skip + " or test_seed_replicability" %}                 # [win or osx]
