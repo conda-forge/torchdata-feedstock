@@ -68,6 +68,7 @@ test:
     # flaky tests
     {% set tests_to_skip = tests_to_skip + " or test_large_sampler_indices" %}              # [osx or aarch64]
     {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_segfault)" %}      # [osx or aarch64]
+    {% set tests_to_skip = tests_to_skip + " or (TestDataLoader and test_no_segfault)" %}   # [osx or aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_get_worker_info" %}                    # [osx or aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_ind_worker_queue" %}                   # [osx or win or aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_batch_sampler" %}                      # [win and py==312]
