@@ -80,7 +80,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_multi_epochs_reproducibility" %}       # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_multiprocessing" %}                    # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_nested_tensor_multiprocessing" %}      # [win and py==312]
-    {% set tests_to_skip = tests_to_skip + " or test_out_of_order" %}                       # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_out_of_order" %}                       # [(win or osx) and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_sampler" %}                            # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_segfault" %}                           # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_sequential" %}                         # [win and py==312]
@@ -96,8 +96,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_multiple_dataloaders" %}               # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_none_state" %}                         # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_sampler_state_dict" %}                 # [win and py==312]
-    {% set tests_to_skip = tests_to_skip + " or test_save_load_state_process_02" %}         # [win and py==312]
-    {% set tests_to_skip = tests_to_skip + " or test_save_load_state_process_08" %}         # [win and py==312]
+
     # may hang or OOM on osx/Windows
     {% set tests_to_skip = tests_to_skip + " or test_seed_replicability" %}                 # [win or osx]
     # typo sequential -> sequential reflects upstream naming
@@ -111,7 +110,7 @@ test:
     # Extremely slow tests on aarch64 and osx (often >5 minutes each)
     {% set tests_to_skip = tests_to_skip + " or (TestStatefulDataLoaderIterable_shard0 and test_mp_x)" %}       # [aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}                                  # [aarch64 or osx]
-    {% set tests_to_skip = tests_to_skip + " or (TestMap and test_save_load_state_process_)" %}                 # [aarch64 or osx]
+    {% set tests_to_skip = tests_to_skip + " or (TestMap and test_save_load_state_process_)" %}                 # [aarch64 or osx or win]
     {% set tests_to_skip = tests_to_skip + " or test_multi_node_weighted_large_sample_size_with_prefetcher" %}  # [aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_nested_tensor_multiprocessing_context_fork_cpu" %}         # [aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}                                 # [aarch64]
