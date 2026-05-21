@@ -77,7 +77,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_dataset_not_reset" %}                  # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}             # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_large_sampler_indices" %}              # [win and py==312]
-    {% set tests_to_skip = tests_to_skip + " or test_multi_epochs_reproducibility" %}       # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_multi_epochs_reproducibility" %}       # [(win or aarch64) and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_multiprocessing" %}                    # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_nested_tensor_multiprocessing" %}      # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_out_of_order" %}                       # [(win or osx) and py==312]
