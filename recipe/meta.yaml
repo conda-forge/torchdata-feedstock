@@ -79,7 +79,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_large_sampler_indices" %}              # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_multi_epochs_reproducibility" %}       # [(win or aarch64) and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_multiprocessing" %}                    # [win and py==312]
-    {% set tests_to_skip = tests_to_skip + " or test_nested_tensor_multiprocessing" %}      # [win and py==312]
+    {% set tests_to_skip = tests_to_skip + " or test_nested_tensor_multiprocessing" %}      # [(win or osx or aarch64) and py>=312]
     {% set tests_to_skip = tests_to_skip + " or test_out_of_order" %}                       # [(win or osx) and py>=312]
     {% set tests_to_skip = tests_to_skip + " or test_sampler" %}                            # [win and py==312]
     {% set tests_to_skip = tests_to_skip + " or test_segfault" %}                           # [win and py==312]
@@ -112,7 +112,6 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_shuffler_iterdatapipe" %}                                  # [aarch64 or osx]
     {% set tests_to_skip = tests_to_skip + " or (TestMap and test_save_load_state_process_)" %}                 # [aarch64 or osx or win]
     {% set tests_to_skip = tests_to_skip + " or test_multi_node_weighted_large_sample_size_with_prefetcher" %}  # [aarch64]
-    {% set tests_to_skip = tests_to_skip + " or test_nested_tensor_multiprocessing_context_fork_cpu" %}         # [aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_iterable_style_dataset" %}                                 # [aarch64]
     {% set tests_to_skip = tests_to_skip + " or test_multiprocessing_contexts" %}                               # [aarch64]
     # Pickling has changed in Python 3.14, and the pickling only happens within the test itself
